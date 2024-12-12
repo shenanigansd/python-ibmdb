@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_050_AutocommitStatus(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_050)
@@ -24,12 +23,13 @@ class IbmDbTestCase(unittest.TestCase):
 
         print(ac)
 
-#__END__
-#__LUW_EXPECTED__
-#1
-#__ZOS_EXPECTED__
-#1
-#__SYSTEMI_EXPECTED__
-#1
-#__IDS_EXPECTED__
-#1
+
+# __END__
+# __LUW_EXPECTED__
+# 1
+# __ZOS_EXPECTED__
+# 1
+# __SYSTEMI_EXPECTED__
+# 1
+# __IDS_EXPECTED__
+# 1

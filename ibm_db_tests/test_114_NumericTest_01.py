@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_114_NumericTest_01(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_114)
@@ -24,7 +23,7 @@ class IbmDbTestCase(unittest.TestCase):
             drop = "drop table numericliteral"
 
             try:
-                ibm_db.exec_immediate( conn, drop )
+                ibm_db.exec_immediate(conn, drop)
             except:
                 pass
 
@@ -40,26 +39,27 @@ class IbmDbTestCase(unittest.TestCase):
             stmt = ibm_db.prepare(conn, "SELECT * FROM numericliteral")
             ibm_db.execute(stmt)
 
-            result = ibm_db.fetch_row( stmt )
-            while ( result ):
+            result = ibm_db.fetch_row(stmt)
+            while result:
                 row0 = ibm_db.result(stmt, 0)
                 row1 = ibm_db.result(stmt, 1)
                 print(row0)
                 print(row1)
-                result = ibm_db.fetch_row( stmt )
+                result = ibm_db.fetch_row(stmt)
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#1
-#10
-#__ZOS_EXPECTED__
-#1
-#10
-#__SYSTEMI_EXPECTED__
-#1
-#10
-#__IDS_EXPECTED__
-#1
-#10
+
+# __END__
+# __LUW_EXPECTED__
+# 1
+# 10
+# __ZOS_EXPECTED__
+# 1
+# 10
+# __SYSTEMI_EXPECTED__
+# 1
+# 10
+# __IDS_EXPECTED__
+# 1
+# 10

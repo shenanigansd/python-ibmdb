@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_141_BindParamSelectStmtMultipleParams_01(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_141)
@@ -32,8 +31,8 @@ class IbmDbTestCase(unittest.TestCase):
 
             if ibm_db.execute(stmt):
                 row = ibm_db.fetch_tuple(stmt)
-                while ( row ):
-                    #row.each { |child| print child }
+                while row:
+                    # row.each { |child| print child }
                     for i in row:
                         print(i)
                     row = ibm_db.fetch_tuple(stmt)
@@ -41,56 +40,57 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#0
-#cat
-#Pook            
-#3.20
-#1
-#dog
-#Peaches         
-#12.30
-#2
-#horse
-#Smarty          
-#350.00
-#__ZOS_EXPECTED__
-#0
-#cat
-#Pook            
-#3.20
-#1
-#dog
-#Peaches         
-#12.30
-#2
-#horse
-#Smarty          
-#350.00
-#__SYSTEMI_EXPECTED__
-#0
-#cat
-#Pook            
-#3.20
-#1
-#dog
-#Peaches         
-#12.30
-#2
-#horse
-#Smarty          
-#350.00
-#__IDS_EXPECTED__
-#0
-#cat
-#Pook            
-#3.20
-#1
-#dog
-#Peaches         
-#12.30
-#2
-#horse
-#Smarty          
-#350.00
+
+# __END__
+# __LUW_EXPECTED__
+# 0
+# cat
+# Pook
+# 3.20
+# 1
+# dog
+# Peaches
+# 12.30
+# 2
+# horse
+# Smarty
+# 350.00
+# __ZOS_EXPECTED__
+# 0
+# cat
+# Pook
+# 3.20
+# 1
+# dog
+# Peaches
+# 12.30
+# 2
+# horse
+# Smarty
+# 350.00
+# __SYSTEMI_EXPECTED__
+# 0
+# cat
+# Pook
+# 3.20
+# 1
+# dog
+# Peaches
+# 12.30
+# 2
+# horse
+# Smarty
+# 350.00
+# __IDS_EXPECTED__
+# 0
+# cat
+# Pook
+# 3.20
+# 1
+# dog
+# Peaches
+# 12.30
+# 2
+# horse
+# Smarty
+# 350.00

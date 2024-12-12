@@ -5,7 +5,6 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
@@ -13,8 +12,9 @@ import platform
 
 from testfunctions import IbmDbTestFunctions
 
+
 class IbmDbTestCase(unittest.TestCase):
-    @unittest.skipIf(platform.system() == 'z/OS',"Test fails with z/OS ODBC driver")
+    @unittest.skipIf(platform.system() == "z/OS", "Test fails with z/OS ODBC driver")
     def test_116_ConnActive(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_116)
@@ -50,44 +50,45 @@ class IbmDbTestCase(unittest.TestCase):
         print(ibm_db.active(conn))
         print(ibm_db.active(conn))
 
-#__END__
-#__LUW_EXPECTED__
-#Is not active
-#Is active
-#Is not active
-#False
-#False
-#False
-#True
-#True
-#True
-#__ZOS_EXPECTED__
-#Is not active
-#Is active
-#Is not active
-#False
-#False
-#False
-#True
-#True
-#True
-#__SYSTEMI_EXPECTED__
-#Is not active
-#Is active
-#Is not active
-#False
-#False
-#False
-#True
-#True
-#True
-#__IDS_EXPECTED__
-#Is not active
-#Is active
-#Is not active
-#False
-#False
-#False
-#True
-#True
-#True
+
+# __END__
+# __LUW_EXPECTED__
+# Is not active
+# Is active
+# Is not active
+# False
+# False
+# False
+# True
+# True
+# True
+# __ZOS_EXPECTED__
+# Is not active
+# Is active
+# Is not active
+# False
+# False
+# False
+# True
+# True
+# True
+# __SYSTEMI_EXPECTED__
+# Is not active
+# Is active
+# Is not active
+# False
+# False
+# False
+# True
+# True
+# True
+# __IDS_EXPECTED__
+# Is not active
+# Is active
+# Is not active
+# False
+# False
+# False
+# True
+# True
+# True

@@ -5,31 +5,30 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_52949_TestSPIntVarcharXml(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_52949)
 
     def test_int(self, conn):
         return_value = 0
-        stmt, return_value = ibm_db.callproc(conn, 'PROCESSINT', (return_value,))
+        stmt, return_value = ibm_db.callproc(conn, "PROCESSINT", (return_value,))
         print("ProcessINT:", return_value)
 
     def test_varchar(self, conn):
         return_value = ""
-        stmt, return_value = ibm_db.callproc(conn, 'PROCESSVAR', (return_value,))
+        stmt, return_value = ibm_db.callproc(conn, "PROCESSVAR", (return_value,))
         print("ProcessVAR:", return_value)
 
     def test_xml(self, conn):
         return_value = "This is just a test for XML Column. The data gets truncated since we do not "
-        stmt, return_value = ibm_db.callproc(conn, 'PROCESSXML', (return_value,))
+        stmt, return_value = ibm_db.callproc(conn, "PROCESSXML", (return_value,))
         print("ProcessXML:", return_value.__str__())
 
     def drop_tables(self, conn):
@@ -56,13 +55,13 @@ class IbmDbTestCase(unittest.TestCase):
                 pass
 
     def run_test_52949(self):
-        options = {ibm_db.SQL_ATTR_XML_DECLARATION : 0}
+        options = {ibm_db.SQL_ATTR_XML_DECLARATION: 0}
         conn = ibm_db.connect(config.database, config.user, config.password, options)
 
         if conn:
-            serverinfo = ibm_db.server_info(conn )
+            serverinfo = ibm_db.server_info(conn)
             server = serverinfo.DBMS_NAME[0:3]
-            result = ''
+            result = ""
             self.drop_tables(conn)
 
             try:
@@ -86,13 +85,13 @@ class IbmDbTestCase(unittest.TestCase):
             except:
                 pass
 
-            if (server == 'IDS'):
+            if server == "IDS":
                 st2 = "CREATE PROCEDURE processint(OUT risorsa int); SELECT age INTO risorsa FROM test_stored WHERE ID = 1; END PROCEDURE;"
             else:
                 st2 = "CREATE PROCEDURE processint(OUT risorsa int) LANGUAGE SQL BEGIN SELECT age INTO risorsa FROM test_stored WHERE ID = 1; END"
             result = ibm_db.exec_immediate(conn, st2)
 
-            if (server == 'IDS'):
+            if server == "IDS":
                 st3 = "CREATE PROCEDURE processvar(OUT risorsa varchar(50)); SELECT name INTO risorsa FROM test_stored WHERE ID = 1; END PROCEDURE;"
             else:
                 st3 = "CREATE PROCEDURE processvar(OUT risorsa varchar(50)) LANGUAGE SQL BEGIN SELECT name INTO risorsa FROM test_stored WHERE ID = 1; END"
@@ -105,18 +104,19 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#__LUW_EXPECTED__
-#ProcessXML: <example>This is an example</example>
-#ProcessINT: 24
-#ProcessVAR: Kellen
-#__ZOS_EXPECTED__
-#ProcessINT: 24
-#ProcessVAR: Kellen
-#__SYSTEMI_EXPECTED__
-#ProcessINT: 24
-#ProcessVAR: Kellen
-#__IDS_EXPECTED__
-#ProcessINT: 24
-#ProcessVAR: Kellen
+
+# __END__
+# __LUW_EXPECTED__
+# __LUW_EXPECTED__
+# ProcessXML: <example>This is an example</example>
+# ProcessINT: 24
+# ProcessVAR: Kellen
+# __ZOS_EXPECTED__
+# ProcessINT: 24
+# ProcessVAR: Kellen
+# __SYSTEMI_EXPECTED__
+# ProcessINT: 24
+# ProcessVAR: Kellen
+# __IDS_EXPECTED__
+# ProcessINT: 24
+# ProcessVAR: Kellen
