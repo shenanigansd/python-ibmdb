@@ -11,8 +11,8 @@ import ibm_db
 import ibm_db_dbi
 import config
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_currentschema(self):
         self.run_default_current_schema()
         self.run_setup_schema()
@@ -33,23 +33,20 @@ class IbmDbTestCase(unittest.TestCase):
             self._assert_current_schema(conn, config.user)
 
         else:
-            print ("Connection failed.")
-
+            print("Connection failed.")
 
     def run_setup_schema(self):
         conn = ibm_db_dbi.connect(
-            'CURRENTSCHEMA=SYSIBM;PORT=%d;PROTOCOL=TCPIP;' % config.port,
-            config.user, config.password, config.hostname, config.database
+            "CURRENTSCHEMA=SYSIBM;PORT=%d;PROTOCOL=TCPIP;" % config.port,
+            config.user,
+            config.password,
+            config.hostname,
+            config.database,
         )
 
         if conn:
-            self.assertEqual(conn.get_current_schema(), 'SYSIBM')
-            self._assert_current_schema(conn.conn_handler, 'SYSIBM')
+            self.assertEqual(conn.get_current_schema(), "SYSIBM")
+            self._assert_current_schema(conn.conn_handler, "SYSIBM")
 
         else:
-            print ("Connection failed.")
-
-
-
-
-
+            print("Connection failed.")

@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_159a_FetchAssocSeveralRows_02(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_159a)
@@ -20,8 +19,8 @@ class IbmDbTestCase(unittest.TestCase):
     def run_test_159a(self):
         conn = ibm_db.connect(config.database, config.user, config.password)
 
-        server = ibm_db.server_info( conn )
-        if (server.DBMS_NAME[0:3] == 'IDS'):
+        server = ibm_db.server_info(conn)
+        if server.DBMS_NAME[0:3] == "IDS":
             op = {ibm_db.ATTR_CASE: ibm_db.CASE_UPPER}
             ibm_db.set_option(conn, op, 1)
 
@@ -29,14 +28,15 @@ class IbmDbTestCase(unittest.TestCase):
         i = 1
 
         row = ibm_db.fetch_assoc(result)
-        while ( row ):
-            #printf("%3d %10s %10s\n",i, row['PRSTDATE'], row['PRENDATE'])
-            print("%3d %10s %10s" % (i, row['PRSTDATE'], row['PRENDATE']))
+        while row:
+            # printf("%3d %10s %10s\n",i, row['PRSTDATE'], row['PRENDATE'])
+            print("%3d %10s %10s" % (i, row["PRSTDATE"], row["PRENDATE"]))
             i += 1
             row = ibm_db.fetch_assoc(result)
 
-#__END__
-#__LUW_EXPECTED__
+
+# __END__
+# __LUW_EXPECTED__
 #  1 1982-01-01 1983-02-01
 #  2 1982-01-01 1983-02-01
 #  3 1982-01-01 1983-02-01
@@ -57,7 +57,7 @@ class IbmDbTestCase(unittest.TestCase):
 # 18 1982-01-01 1983-02-01
 # 19 1982-01-01 1983-02-01
 # 20 1982-01-01 1982-09-15
-#__ZOS_EXPECTED__
+# __ZOS_EXPECTED__
 #  1 1982-01-01 1983-02-01
 #  2 1982-01-01 1983-02-01
 #  3 1982-01-01 1983-02-01
@@ -78,7 +78,7 @@ class IbmDbTestCase(unittest.TestCase):
 # 18 1982-01-01 1983-02-01
 # 19 1982-01-01 1983-02-01
 # 20 1982-01-01 1982-09-15
-#__SYSTEMI_EXPECTED__
+# __SYSTEMI_EXPECTED__
 #  1 1982-01-01 1983-02-01
 #  2 1982-01-01 1983-02-01
 #  3 1982-01-01 1983-02-01
@@ -99,7 +99,7 @@ class IbmDbTestCase(unittest.TestCase):
 # 18 1982-01-01 1983-02-01
 # 19 1982-01-01 1983-02-01
 # 20 1982-01-01 1982-09-15
-#__IDS_EXPECTED__
+# __IDS_EXPECTED__
 #  1 1982-01-01 1983-02-01
 #  2 1982-01-01 1983-02-01
 #  3 1982-01-01 1983-02-01

@@ -11,9 +11,11 @@ import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 from unittest import TestCase
-TestCase.maxDiff=None
-class IbmDbTestCase(unittest.TestCase):
 
+TestCase.maxDiff = None
+
+
+class IbmDbTestCase(unittest.TestCase):
     def test_200_MultipleRsltsetsUniformColDefs(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_200)
@@ -21,9 +23,9 @@ class IbmDbTestCase(unittest.TestCase):
 
     def run_test_200(self):
         conn = ibm_db.connect(config.database, config.user, config.password)
-        serverinfo = ibm_db.server_info( conn )
+        serverinfo = ibm_db.server_info(conn)
         server = serverinfo.DBMS_NAME[0:3]
-        if (server == 'IDS'):
+        if server == "IDS":
             procedure = """
         CREATE FUNCTION multiResults()
          RETURNING CHAR(16), INT;
@@ -72,43 +74,47 @@ class IbmDbTestCase(unittest.TestCase):
 
         if conn:
             try:
-                ibm_db.exec_immediate(conn, 'DROP PROCEDURE multiResults')
+                ibm_db.exec_immediate(conn, "DROP PROCEDURE multiResults")
             except:
                 pass
             ibm_db.exec_immediate(conn, procedure)
-            if sys.platform == 'zos':
-                stmt = ibm_db.exec_immediate(conn, 'CALL MULTIRESULTS()')
+            if sys.platform == "zos":
+                stmt = ibm_db.exec_immediate(conn, "CALL MULTIRESULTS()")
             else:
-                stmt = ibm_db.exec_immediate(conn, 'CALL multiresults()')
-            #print(stmt)
+                stmt = ibm_db.exec_immediate(conn, "CALL multiresults()")
+            # print(stmt)
             print("Fetching first result set")
             row = ibm_db.fetch_tuple(stmt)
-            while ( row ):
+            while row:
                 for i in row:
                     print(i)
                 row = ibm_db.fetch_tuple(stmt)
 
-            if (server == 'IDS'):
-                print("Fetching second result set (should fail -- IDS does not support multiple result sets)")
+            if server == "IDS":
+                print(
+                    "Fetching second result set (should fail -- IDS does not support multiple result sets)"
+                )
             else:
                 print("Fetching second result set")
-            #print(stmt)
-            res = ibm_db.next_result (stmt)
+            # print(stmt)
+            res = ibm_db.next_result(stmt)
             if res:
                 row = ibm_db.fetch_tuple(res)
-                while ( row ):
+                while row:
                     for i in row:
                         print(i)
                     row = ibm_db.fetch_tuple(res)
 
-            if (server == 'IDS'):
-                print("Fetching third result set (should fail -- IDS does not support multiple result sets)")
+            if server == "IDS":
+                print(
+                    "Fetching third result set (should fail -- IDS does not support multiple result sets)"
+                )
             else:
                 print("Fetching third result set")
             res2 = ibm_db.next_result(stmt)
             if res2:
                 row = ibm_db.fetch_tuple(res2)
-                while ( row ):
+                while row:
                     for i in row:
                         print(i)
                     row = ibm_db.fetch_tuple(res2)
@@ -117,7 +123,7 @@ class IbmDbTestCase(unittest.TestCase):
             res3 = ibm_db.next_result(stmt)
             if res3:
                 row = ibm_db.fetch_tuple(res3)
-                while ( row ):
+                while row:
                     for i in row:
                         print(i)
                     row = ibm_db.fetch_tuple(res3)
@@ -126,122 +132,123 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#Fetching first result set
-#Bubbles         
-#3
-#Gizmo           
-#4
-#Peaches         
-#1
-#Pook            
-#0
-#Rickety Ride    
-#5
-#Smarty          
-#2
-#Sweater         
-#6
-#Fetching second result set
-#Smarty          
-#2
-#Pook            
-#0
-#Peaches         
-#1
-#Bubbles         
-#3
-#Fetching third result set
-#Bubbles         
-#3
-#Gizmo           
-#4
-#Pook            
-#0
-#Fetching fourth result set (should fail)
-#__ZOS_EXPECTED__
-#Fetching first result set
-#Bubbles         
-#3
-#Gizmo           
-#4
-#Peaches         
-#1
-#Pook            
-#0
-#Rickety Ride    
-#5
-#Smarty          
-#2
-#Sweater         
-#6
-#Fetching second result set
-#Smarty          
-#2
-#Pook            
-#0
-#Peaches         
-#1
-#Bubbles         
-#3
-#Fetching third result set
-#Bubbles         
-#3
-#Gizmo           
-#4
-#Pook            
-#0
-#Fetching fourth result set (should fail)
-#__SYSTEMI_EXPECTED__
-#Fetching first result set
-#Bubbles         
-#3
-#Gizmo           
-#4
-#Peaches         
-#1
-#Pook            
-#0
-#Rickety Ride    
-#5
-#Smarty          
-#2
-#Sweater         
-#6
-#Fetching second result set
-#Smarty          
-#2
-#Pook            
-#0
-#Peaches         
-#1
-#Bubbles         
-#3
-#Fetching third result set
-#Bubbles         
-#3
-#Gizmo           
-#4
-#Pook            
-#0
-#Fetching fourth result set (should fail)
-#__IDS_EXPECTED__
-#Fetching first result set
-#Bubbles         
-#3
-#Gizmo           
-#4
-#Peaches         
-#1
-#Pook            
-#0
-#Rickety Ride    
-#5
-#Smarty          
-#2
-#Sweater         
-#6
-#Fetching second result set (should fail -- IDS does not support multiple result sets)
-#Fetching third result set (should fail -- IDS does not support multiple result sets)
-#Fetching fourth result set (should fail)
+
+# __END__
+# __LUW_EXPECTED__
+# Fetching first result set
+# Bubbles
+# 3
+# Gizmo
+# 4
+# Peaches
+# 1
+# Pook
+# 0
+# Rickety Ride
+# 5
+# Smarty
+# 2
+# Sweater
+# 6
+# Fetching second result set
+# Smarty
+# 2
+# Pook
+# 0
+# Peaches
+# 1
+# Bubbles
+# 3
+# Fetching third result set
+# Bubbles
+# 3
+# Gizmo
+# 4
+# Pook
+# 0
+# Fetching fourth result set (should fail)
+# __ZOS_EXPECTED__
+# Fetching first result set
+# Bubbles
+# 3
+# Gizmo
+# 4
+# Peaches
+# 1
+# Pook
+# 0
+# Rickety Ride
+# 5
+# Smarty
+# 2
+# Sweater
+# 6
+# Fetching second result set
+# Smarty
+# 2
+# Pook
+# 0
+# Peaches
+# 1
+# Bubbles
+# 3
+# Fetching third result set
+# Bubbles
+# 3
+# Gizmo
+# 4
+# Pook
+# 0
+# Fetching fourth result set (should fail)
+# __SYSTEMI_EXPECTED__
+# Fetching first result set
+# Bubbles
+# 3
+# Gizmo
+# 4
+# Peaches
+# 1
+# Pook
+# 0
+# Rickety Ride
+# 5
+# Smarty
+# 2
+# Sweater
+# 6
+# Fetching second result set
+# Smarty
+# 2
+# Pook
+# 0
+# Peaches
+# 1
+# Bubbles
+# 3
+# Fetching third result set
+# Bubbles
+# 3
+# Gizmo
+# 4
+# Pook
+# 0
+# Fetching fourth result set (should fail)
+# __IDS_EXPECTED__
+# Fetching first result set
+# Bubbles
+# 3
+# Gizmo
+# 4
+# Peaches
+# 1
+# Pook
+# 0
+# Rickety Ride
+# 5
+# Smarty
+# 2
+# Sweater
+# 6
+# Fetching second result set (should fail -- IDS does not support multiple result sets)
+# Fetching third result set (should fail -- IDS does not support multiple result sets)
+# Fetching fourth result set (should fail)

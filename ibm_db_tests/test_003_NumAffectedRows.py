@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_003_NumAffectedRows(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_003)
@@ -22,20 +21,21 @@ class IbmDbTestCase(unittest.TestCase):
 
         if conn:
             ibm_db.autocommit(conn, ibm_db.SQL_AUTOCOMMIT_OFF)
-            sql = 'UPDATE animals SET id = 9'
+            sql = "UPDATE animals SET id = 9"
             res = ibm_db.exec_immediate(conn, sql)
-            print ("Number of affected rows: %d" % ibm_db.num_rows(res))
+            print("Number of affected rows: %d" % ibm_db.num_rows(res))
             ibm_db.rollback(conn)
             ibm_db.close(conn)
         else:
-            print ("Connection failed.")
+            print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#Number of affected rows: 7
-#__ZOS_EXPECTED__
-#Number of affected rows: 7
-#__SYSTEMI_EXPECTED__
-#Number of affected rows: 7
-#__IDS_EXPECTED__
-#Number of affected rows: 7
+
+# __END__
+# __LUW_EXPECTED__
+# Number of affected rows: 7
+# __ZOS_EXPECTED__
+# Number of affected rows: 7
+# __SYSTEMI_EXPECTED__
+# Number of affected rows: 7
+# __IDS_EXPECTED__
+# Number of affected rows: 7

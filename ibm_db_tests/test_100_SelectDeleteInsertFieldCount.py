@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_100_SelectDeleteInsertFieldCount(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_100)
@@ -29,7 +28,9 @@ class IbmDbTestCase(unittest.TestCase):
 
             print("int(%d)" % fields1)
 
-            stmt = ibm_db.exec_immediate(conn, "SELECT name, breed FROM animals ORDER BY breed")
+            stmt = ibm_db.exec_immediate(
+                conn, "SELECT name, breed FROM animals ORDER BY breed"
+            )
             fields2 = ibm_db.num_fields(stmt)
 
             print("int(%d)" % fields2)
@@ -39,12 +40,16 @@ class IbmDbTestCase(unittest.TestCase):
 
             print("int(%d)" % fields3)
 
-            stmt = ibm_db.exec_immediate(conn, "INSERT INTO animals values (0, 'cat', 'Pook', 3.2)")
+            stmt = ibm_db.exec_immediate(
+                conn, "INSERT INTO animals values (0, 'cat', 'Pook', 3.2)"
+            )
             fields4 = ibm_db.num_fields(stmt)
 
             print("int(%d)" % fields4)
 
-            stmt = ibm_db.exec_immediate(conn, "SELECT name, breed, 'TEST' FROM animals")
+            stmt = ibm_db.exec_immediate(
+                conn, "SELECT name, breed, 'TEST' FROM animals"
+            )
             fields5 = ibm_db.num_fields(stmt)
 
             print("int(%d)" % fields5)
@@ -53,28 +58,29 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#int(4)
-#int(2)
-#int(0)
-#int(0)
-#int(3)
-#__ZOS_EXPECTED__
-#int(4)
-#int(2)
-#int(0)
-#int(0)
-#int(3)
-#__SYSTEMI_EXPECTED__
-#int(4)
-#int(2)
-#int(0)
-#int(0)
-#int(3)
-#__IDS_EXPECTED__
-#int(4)
-#int(2)
-#int(0)
-#int(0)
-#int(3)
+
+# __END__
+# __LUW_EXPECTED__
+# int(4)
+# int(2)
+# int(0)
+# int(0)
+# int(3)
+# __ZOS_EXPECTED__
+# int(4)
+# int(2)
+# int(0)
+# int(0)
+# int(3)
+# __SYSTEMI_EXPECTED__
+# int(4)
+# int(2)
+# int(0)
+# int(0)
+# int(3)
+# __IDS_EXPECTED__
+# int(4)
+# int(2)
+# int(0)
+# int(0)
+# int(3)

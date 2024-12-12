@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_145_BindRetrieveNoneEmptyString(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_145)
@@ -23,11 +22,13 @@ class IbmDbTestCase(unittest.TestCase):
         if conn:
             ibm_db.autocommit(conn, ibm_db.SQL_AUTOCOMMIT_OFF)
 
-            stmt = ibm_db.prepare(conn, "INSERT INTO animals (id, breed, name) VALUES (?, ?, ?)")
+            stmt = ibm_db.prepare(
+                conn, "INSERT INTO animals (id, breed, name) VALUES (?, ?, ?)"
+            )
 
             id = 999
             breed = None
-            name = 'PythonDS'
+            name = "PythonDS"
             ibm_db.bind_param(stmt, 1, id)
             ibm_db.bind_param(stmt, 2, breed)
             ibm_db.bind_param(stmt, 3, name)
@@ -43,11 +44,13 @@ class IbmDbTestCase(unittest.TestCase):
             # for both ibm_db.bind_param and ibm_db.execute treat Python Nones and empty
             # strings the right way.
 
-            ibm_db.execute(stmt, (1000, None, 'PythonDS'))
+            ibm_db.execute(stmt, (1000, None, "PythonDS"))
 
-            result = ibm_db.exec_immediate(conn, "SELECT id, breed, name FROM animals WHERE breed IS NULL")
+            result = ibm_db.exec_immediate(
+                conn, "SELECT id, breed, name FROM animals WHERE breed IS NULL"
+            )
             row = ibm_db.fetch_tuple(result)
-            while ( row ):
+            while row:
                 for i in row:
                     print(i)
                 row = ibm_db.fetch_tuple(result)
@@ -56,32 +59,33 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#999
-#None
-#PythonDS        
-#1000
-#None
-#PythonDS        
-#__ZOS_EXPECTED__
-#999
-#None
-#PythonDS        
-#1000
-#None
-#PythonDS        
-#__SYSTEMI_EXPECTED__
-#999
-#None
-#PythonDS        
-#1000
-#None
-#PythonDS        
-#__IDS_EXPECTED__
-#999
-#None
-#PythonDS        
-#1000
-#None
-#PythonDS        
+
+# __END__
+# __LUW_EXPECTED__
+# 999
+# None
+# PythonDS
+# 1000
+# None
+# PythonDS
+# __ZOS_EXPECTED__
+# 999
+# None
+# PythonDS
+# 1000
+# None
+# PythonDS
+# __SYSTEMI_EXPECTED__
+# 999
+# None
+# PythonDS
+# 1000
+# None
+# PythonDS
+# __IDS_EXPECTED__
+# 999
+# None
+# PythonDS
+# 1000
+# None
+# PythonDS

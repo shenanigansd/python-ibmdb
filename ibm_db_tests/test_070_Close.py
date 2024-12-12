@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_070_Close(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_070)
@@ -21,7 +20,7 @@ class IbmDbTestCase(unittest.TestCase):
         conn = ibm_db.connect(config.database, config.user, config.password)
 
         if conn:
-            if (type(conn) == ibm_db.IBM_DBConnection):
+            if type(conn) == ibm_db.IBM_DBConnection:
                 print("Resource is a DB2 Connection")
 
             rc = ibm_db.close(conn)
@@ -30,16 +29,17 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#Resource is a DB2 Connection
-#True
-#__ZOS_EXPECTED__
-#Resource is a DB2 Connection
-#True
-#__SYSTEMI_EXPECTED__
-#Resource is a DB2 Connection
-#True
-#__IDS_EXPECTED__
-#Resource is a DB2 Connection
-#True
+
+# __END__
+# __LUW_EXPECTED__
+# Resource is a DB2 Connection
+# True
+# __ZOS_EXPECTED__
+# Resource is a DB2 Connection
+# True
+# __SYSTEMI_EXPECTED__
+# Resource is a DB2 Connection
+# True
+# __IDS_EXPECTED__
+# Resource is a DB2 Connection
+# True

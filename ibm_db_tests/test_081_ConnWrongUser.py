@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_081_ConnWrongUser(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_081)
@@ -24,20 +23,21 @@ class IbmDbTestCase(unittest.TestCase):
         except:
             print(ibm_db.conn_error())
 
-        #if conn:
+        # if conn:
         #  print "??? No way."
-        #else:
+        # else:
         #  err = ibm_db.conn_error
         #  print err
 
-#__END__
-#__LUW_EXPECTED__
-#08001
-#__ZOS_EXPECTED__
-#08001
-#__SYSTEMI_EXPECTED__
-#08001
-#__IDS_EXPECTED__
-#08001
-#__ZOS_ODBC_EXPECTED__
-#??? No way.
+
+# __END__
+# __LUW_EXPECTED__
+# 08001
+# __ZOS_EXPECTED__
+# 08001
+# __SYSTEMI_EXPECTED__
+# 08001
+# __IDS_EXPECTED__
+# 08001
+# __ZOS_ODBC_EXPECTED__
+# ??? No way.

@@ -11,8 +11,8 @@ import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_019_selectRowcountPrefetchPrepOpt(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_019)
@@ -21,10 +21,16 @@ class IbmDbTestCase(unittest.TestCase):
         conn = ibm_db.connect(config.database, config.user, config.password)
         ibm_db.autocommit(conn, ibm_db.SQL_AUTOCOMMIT_ON)
         if conn:
-            if('zos' in sys.platform):
+            if "zos" in sys.platform:
                 stmt = ibm_db.prepare(conn, "SELECT * from animals WHERE weight < 10.0")
             else:
-                stmt = ibm_db.prepare(conn, "SELECT * from animals WHERE weight < 10.0", {ibm_db.SQL_ATTR_ROWCOUNT_PREFETCH : ibm_db.SQL_ROWCOUNT_PREFETCH_ON} )
+                stmt = ibm_db.prepare(
+                    conn,
+                    "SELECT * from animals WHERE weight < 10.0",
+                    {
+                        ibm_db.SQL_ATTR_ROWCOUNT_PREFETCH: ibm_db.SQL_ROWCOUNT_PREFETCH_ON
+                    },
+                )
             result = ibm_db.execute(stmt)
             if result:
                 rows = ibm_db.num_rows(stmt)
@@ -37,14 +43,15 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("no connection:", ibm_db.conn_errormsg())
 
-#__END__
-#__LUW_EXPECTED__
-#affected row: 4
-#__ZOS_EXPECTED__
-#affected row: 4
-#__SYSTEMI_EXPECTED__
-#affected row: 4
-#__IDS_EXPECTED__
-#affected row: 4
-#__ZOS_ODBC_EXPECTED__
-#affected row: -1
+
+# __END__
+# __LUW_EXPECTED__
+# affected row: 4
+# __ZOS_EXPECTED__
+# affected row: 4
+# __SYSTEMI_EXPECTED__
+# affected row: 4
+# __IDS_EXPECTED__
+# affected row: 4
+# __ZOS_ODBC_EXPECTED__
+# affected row: -1

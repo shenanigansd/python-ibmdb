@@ -13,8 +13,8 @@ import config
 import getpass
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     # Fails with AssertionError: '     ' != '08001'
     @unittest.skipIf(os.environ.get("CI", False), "Test fails in CI")
     def test_080_ConnWrongDbAlias(self):
@@ -23,27 +23,28 @@ class IbmDbTestCase(unittest.TestCase):
 
     def run_test_080(self):
         try:
-            if sys.platform == 'zos':
-                conn =  ibm_db.connect("x", getpass.getuser(), config.password)
+            if sys.platform == "zos":
+                conn = ibm_db.connect("x", getpass.getuser(), config.password)
             else:
                 conn = ibm_db.connect("x", config.user, config.password)
             print("??? No way.")
         except:
             print(ibm_db.conn_error())
 
-        #if conn:
+        # if conn:
         #  print "??? No way."
-        #else:
+        # else:
         #  print ibm_db.conn_error()
 
-#__END__
-#__LUW_EXPECTED__
-#08001
-#__ZOS_EXPECTED__
-#08001
-#__SYSTEMI_EXPECTED__
-#08001
-#__IDS_EXPECTED__
-#08001
-#__ZOS_ODBC_EXPECTED__
-#42505
+
+# __END__
+# __LUW_EXPECTED__
+# 08001
+# __ZOS_EXPECTED__
+# 08001
+# __SYSTEMI_EXPECTED__
+# 08001
+# __IDS_EXPECTED__
+# 08001
+# __ZOS_ODBC_EXPECTED__
+# 42505

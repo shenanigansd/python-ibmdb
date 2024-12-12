@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_250_FreeResult_01(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_250)
@@ -32,20 +31,21 @@ class IbmDbTestCase(unittest.TestCase):
         print(r2)
         print(r3)
 
-#__END__
-#__LUW_EXPECTED__
-#True
-#True
-#True
-#__ZOS_EXPECTED__
-#True
-#True
-#True
-#__SYSTEMI_EXPECTED__
-#True
-#True
-#True
-#__IDS_EXPECTED__
-#True
-#True
-#True
+
+# __END__
+# __LUW_EXPECTED__
+# True
+# True
+# True
+# __ZOS_EXPECTED__
+# True
+# True
+# True
+# __SYSTEMI_EXPECTED__
+# True
+# True
+# True
+# __IDS_EXPECTED__
+# True
+# True
+# True

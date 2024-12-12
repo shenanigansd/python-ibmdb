@@ -5,14 +5,13 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_021_CommitDelete(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_021)
@@ -30,7 +29,7 @@ class IbmDbTestCase(unittest.TestCase):
             ac = ibm_db.autocommit(conn)
             if ac != 0:
                 print("Cannot set ibm_db.AUTOCOMMIT_OFF\nCannot run test")
-                #continue
+                # continue
 
             ibm_db.exec_immediate(conn, "DELETE FROM animals")
 
@@ -48,15 +47,15 @@ class IbmDbTestCase(unittest.TestCase):
 
             # Populate the animal table
             animals = (
-              (0, 'cat',        'Pook',         3.2),
-              (1, 'dog',        'Peaches',      12.3),
-              (2, 'horse',      'Smarty',       350.0),
-              (3, 'gold fish',  'Bubbles',      0.1),
-              (4, 'budgerigar', 'Gizmo',        0.2),
-              (5, 'goat',       'Rickety Ride', 9.7),
-              (6, 'llama',      'Sweater',      150)
+                (0, "cat", "Pook", 3.2),
+                (1, "dog", "Peaches", 12.3),
+                (2, "horse", "Smarty", 350.0),
+                (3, "gold fish", "Bubbles", 0.1),
+                (4, "budgerigar", "Gizmo", 0.2),
+                (5, "goat", "Rickety Ride", 9.7),
+                (6, "llama", "Sweater", 150),
             )
-            insert = 'INSERT INTO animals (id, breed, name, weight) VALUES (?, ?, ?, ?)'
+            insert = "INSERT INTO animals (id, breed, name, weight) VALUES (?, ?, ?, ?)"
             stmt = ibm_db.prepare(conn, insert)
             if stmt:
                 for animal in animals:
@@ -66,20 +65,21 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#7
-#0
-#0
-#__ZOS_EXPECTED__
-#7
-#0
-#0
-#__SYSTEMI_EXPECTED__
-#7
-#0
-#0
-#__IDS_EXPECTED__
-#7
-#0
-#0
+
+# __END__
+# __LUW_EXPECTED__
+# 7
+# 0
+# 0
+# __ZOS_EXPECTED__
+# 7
+# 0
+# 0
+# __SYSTEMI_EXPECTED__
+# 7
+# 0
+# 0
+# __IDS_EXPECTED__
+# 7
+# 0
+# 0

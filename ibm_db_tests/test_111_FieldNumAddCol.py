@@ -5,21 +5,20 @@
 #
 
 from __future__ import print_function
-import sys
 import unittest
 import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
-class IbmDbTestCase(unittest.TestCase):
 
+class IbmDbTestCase(unittest.TestCase):
     def test_111_FieldNumAddCol(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_111)
 
     def run_test_111(self):
         conn = ibm_db.connect(config.database, config.user, config.password)
-        server = ibm_db.server_info( conn )
+        server = ibm_db.server_info(conn)
 
         if conn:
             ibm_db.autocommit(conn, ibm_db.SQL_AUTOCOMMIT_OFF)
@@ -27,9 +26,12 @@ class IbmDbTestCase(unittest.TestCase):
             insert = "INSERT INTO animals values (7, 'cat', 'Benji', 5.1)"
             ibm_db.exec_immediate(conn, insert)
 
-            stmt = ibm_db.exec_immediate(conn, "SELECT breed, COUNT(breed) AS number FROM animals GROUP BY breed ORDER BY breed")
+            stmt = ibm_db.exec_immediate(
+                conn,
+                "SELECT breed, COUNT(breed) AS number FROM animals GROUP BY breed ORDER BY breed",
+            )
 
-            if (server.DBMS_NAME[0:3] == 'IDS'):
+            if server.DBMS_NAME[0:3] == "IDS":
                 num1 = ibm_db.field_num(stmt, "id")
                 num2 = ibm_db.field_num(stmt, "breed")
                 num3 = ibm_db.field_num(stmt, "number")
@@ -62,40 +64,41 @@ class IbmDbTestCase(unittest.TestCase):
         else:
             print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#False
-#int(0)
-#int(1)
-#False
-#False
-#False
-#int(1)
-#False
-#__ZOS_EXPECTED__
-#False
-#int(0)
-#int(1)
-#False
-#False
-#False
-#int(1)
-#False
-#__SYSTEMI_EXPECTED__
-#False
-#int(0)
-#int(1)
-#False
-#False
-#False
-#int(1)
-#False
-#__IDS_EXPECTED__
-#False
-#int(0)
-#int(1)
-#False
-#False
-#False
-#int(1)
-#False
+
+# __END__
+# __LUW_EXPECTED__
+# False
+# int(0)
+# int(1)
+# False
+# False
+# False
+# int(1)
+# False
+# __ZOS_EXPECTED__
+# False
+# int(0)
+# int(1)
+# False
+# False
+# False
+# int(1)
+# False
+# __SYSTEMI_EXPECTED__
+# False
+# int(0)
+# int(1)
+# False
+# False
+# False
+# int(1)
+# False
+# __IDS_EXPECTED__
+# False
+# int(0)
+# int(1)
+# False
+# False
+# False
+# int(1)
+# False

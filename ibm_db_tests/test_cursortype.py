@@ -11,22 +11,23 @@ import ibm_db
 import config
 from testfunctions import IbmDbTestFunctions
 
+
 class IbmDbTestCase(unittest.TestCase):
     def test_cursortype(self):
         obj = IbmDbTestFunctions()
         obj.assert_expect(self.run_test_cursortype)
 
     def run_test_cursortype(self):
-        if sys.platform == 'zos':
+        if sys.platform == "zos":
             options = {}
         else:
-            options = { ibm_db.SQL_ATTR_INFO_PROGRAMNAME : 'TestProgram'}
+            options = {ibm_db.SQL_ATTR_INFO_PROGRAMNAME: "TestProgram"}
         conn = ibm_db.connect(config.database, config.user, config.password, options)
 
         if conn:
             drop = "DROP TABLE TEMP_TEST"
             try:
-                result = ibm_db.exec_immediate(conn,drop)
+                result = ibm_db.exec_immediate(conn, drop)
             except:
                 pass
 
@@ -40,7 +41,7 @@ class IbmDbTestCase(unittest.TestCase):
 
             print("Setting cursor type to SQL_CURSOR_FORWARD_ONLY")
             op = {ibm_db.SQL_ATTR_CURSOR_TYPE: ibm_db.SQL_CURSOR_FORWARD_ONLY}
-            stmt = ibm_db.prepare(conn, "SELECT * FROM temp_test WHERE id > 1",op )
+            stmt = ibm_db.prepare(conn, "SELECT * FROM temp_test WHERE id > 1", op)
             val = ibm_db.cursor_type(stmt)
             print("statement cursor type = ", end="")
             print(val, end="\n")
@@ -53,7 +54,7 @@ class IbmDbTestCase(unittest.TestCase):
             stmt = ibm_db.prepare(conn, "SELECT * FROM temp_test", op)
             val = ibm_db.cursor_type(stmt)
             print("statement cursor type = ", end="")
-            print(val,end="\n")
+            print(val, end="\n")
             value = ibm_db.get_option(stmt, ibm_db.SQL_ATTR_CURSOR_TYPE, 0)
             print(value)
             print()
@@ -80,58 +81,59 @@ class IbmDbTestCase(unittest.TestCase):
 
             ibm_db.close(conn)
         else:
-            print ("Connection failed.")
+            print("Connection failed.")
 
-#__END__
-#__LUW_EXPECTED__
-#Setting cursor type to SQL_CURSOR_FORWARD_ONLY
-#statement cursor type = 0
-#0
-#Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
-#statement cursor type = 1
-#1
-#Setting cursor type to SQL_CURSOR_STATIC
-#statement cursor type = 1
-#3
-#Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
-#statement cursor type = 1
-#1
-#__ZOS_EXPECTED__
-#Setting cursor type to SQL_CURSOR_FORWARD_ONLY
-#statement cursor type = 0
-#0
-#Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
-#statement cursor type = 1
-#1
-#Setting cursor type to SQL_CURSOR_STATIC
-#statement cursor type = 1
-#3
-#Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
-#statement cursor type = 1
-#2
-#__SYSTEMI_EXPECTED__
-#Setting cursor type to SQL_CURSOR_FORWARD_ONLY
-#statement cursor type = 0
-#0
-#Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
-#statement cursor type = 1
-#3
-#Setting cursor type to SQL_CURSOR_STATIC
-#statement cursor type = 1
-#3
-#Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
-#statement cursor type = 1
-#3
-#__ZOS_ODBC_EXPECTED__
-#Setting cursor type to SQL_CURSOR_FORWARD_ONLY
-#statement cursor type = 0
-#0
-#Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
-#statement cursor type = 1
-#3
-#Setting cursor type to SQL_CURSOR_STATIC
-#statement cursor type = 1
-#3
-#Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
-#statement cursor type = 1
-#2
+
+# __END__
+# __LUW_EXPECTED__
+# Setting cursor type to SQL_CURSOR_FORWARD_ONLY
+# statement cursor type = 0
+# 0
+# Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
+# statement cursor type = 1
+# 1
+# Setting cursor type to SQL_CURSOR_STATIC
+# statement cursor type = 1
+# 3
+# Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
+# statement cursor type = 1
+# 1
+# __ZOS_EXPECTED__
+# Setting cursor type to SQL_CURSOR_FORWARD_ONLY
+# statement cursor type = 0
+# 0
+# Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
+# statement cursor type = 1
+# 1
+# Setting cursor type to SQL_CURSOR_STATIC
+# statement cursor type = 1
+# 3
+# Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
+# statement cursor type = 1
+# 2
+# __SYSTEMI_EXPECTED__
+# Setting cursor type to SQL_CURSOR_FORWARD_ONLY
+# statement cursor type = 0
+# 0
+# Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
+# statement cursor type = 1
+# 3
+# Setting cursor type to SQL_CURSOR_STATIC
+# statement cursor type = 1
+# 3
+# Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
+# statement cursor type = 1
+# 3
+# __ZOS_ODBC_EXPECTED__
+# Setting cursor type to SQL_CURSOR_FORWARD_ONLY
+# statement cursor type = 0
+# 0
+# Setting cursor type to SQL_CURSOR_KEYSET_DRIVEN
+# statement cursor type = 1
+# 3
+# Setting cursor type to SQL_CURSOR_STATIC
+# statement cursor type = 1
+# 3
+# Setting cursor type to SQL_CURSOR_DYNAMIC - zOS only
+# statement cursor type = 1
+# 2
