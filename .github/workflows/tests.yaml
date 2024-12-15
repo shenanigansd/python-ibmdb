@@ -1,0 +1,56 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      db2:
+        image: icr.io/db2_community/db2
+        env:
+          LICENSE: accept
+          DBNAME: sample
+          DB2INST1_PASSWORD: password
+        options: >-
+          --name db2
+          --privileged
+        volumes:
+          - database:/database
+        ports:
+          - 50000:50000
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2     
+
+      - name: Setup Python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: 3.x
+
+      - name: Install project
+        run: pip install .
+
+      - name: Manually wait for DB2 to start
+        run: |
+          while true
+          do
+            if (docker logs db2 | grep 'Setup has completed')
+            then
+                break
+            fi
+
+            sleep 20
+          done
+
+      - name: Run tests
+        run: |
+          cp config.py.sample config.py
+          echo -e '[sample]\nHostname=localhost\nProtocol=TCPIP\nDatabase=sample' > db2cli.ini
+          export DB2CLIINIPATH=$PWD
+          python ibmdb_tests.py
