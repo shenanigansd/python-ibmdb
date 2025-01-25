@@ -40,6 +40,17 @@ jobs:
       - name: Install project
         run: pip install .
 
+      - name: Manually wait for DB2 to start
+        run: |
+          while true
+          do
+            if (docker logs db2 | grep 'Setup has completed')
+            then
+                break
+            fi
+            sleep 20
+          done
+
       - name: Run tests
         run: |
           cp config.py.sample config.py
