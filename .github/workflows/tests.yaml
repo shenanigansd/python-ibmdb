@@ -57,3 +57,10 @@ jobs:
           echo -e '[sample]\nHostname=localhost\nProtocol=TCPIP\nDatabase=sample' > db2cli.ini
           export DB2CLIINIPATH=$PWD
           python ibmdb_tests.py
+
+      - name: Upload log
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        with:
+          name: test-log
+          path: log.txt
